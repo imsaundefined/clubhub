@@ -98,6 +98,7 @@ $( document ).ready( function(){
 	$(".footer").append("<footer><p><a href=\"/\"><img class=\"footer-logo\" src=\"/media/IMSA_Undefined_Logo_White.png\" alt=\"IMSA Undefined\"></a>&nbsp;&nbsp;&nbsp;Copyright &copy; IMSA Undefined 2015</p></footer>");
 });
 
+/*
 function getPreferredCalendars(form)
 {
         if(cal_array.length > 1)
@@ -173,6 +174,7 @@ function updatePreferredCalendars(form)
         
         setCookie("calendars", names.toString(), 20*365);
 }
+*/
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();

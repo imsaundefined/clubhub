@@ -90,6 +90,27 @@ $( document ).ready(function(){
                 return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
         }
         
+        function getWeekStart(d) {
+                d = new Date(d);
+                var day = d.getDay(),
+                diff = d.getDate() - day;
+                return new Date(d.setDate(diff));
+        }
+        
+        function getWeekEnd(d) {
+                d = new Date(d);
+                var day = d.getDay(),
+                diff = d.getDate() + (6 - day);
+                return new Date(d.setDate(diff));
+        }
+        
+        function urlify(text) {
+                var urlRegex = /(https?:\/\/[^\s]+)/g;
+                return text.replace(urlRegex, function(url) {
+                        return '<a href="' + url + '">' + url + '</a>';
+                })
+        }
+
         var PosterSpreadsheetKey = "1MwsGs0Gk8kV7MouZ5IsolOZZd-aVDJwK-RNfYxj8cZ8";
         var PosterFolderKey = "0B_vROCev3947Qy1kN3Z2RUxOUU0";
         //console.log("HEY");
@@ -97,7 +118,7 @@ $( document ).ready(function(){
                 //console.log(data);
                 
                 //default view
-                var defaultview = "date";
+                var defaultview = "week";
                 
                 var posters = data.feed.entry;
                 var ToBePosted = [];
@@ -142,17 +163,27 @@ $( document ).ready(function(){
                 
                 var datelist = [];
                 var clublist = [];
+                var weeklist = [];
                 $(ToBePosted).each(function(index){
-                        if(datelist.indexOf(ToBePosted[index][3]+ToBePosted[index][4]+ToBePosted[index][5]) == -1)
+                        var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
+                        if(datelist.indexOf(namedate) == -1)
                         {
-                                var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
-                                $("#isowall").append("<div id=\"datetip"+index+"\" class=\"mitem sorttip datetip\" data-date=\""+ToBePosted[index][3]+ToBePosted[index][4]+ToBePosted[index][5]+"\" data-precedence=\"a\"><p>"+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+"<p></div>");
-                                datelist.push(ToBePosted[index][3]+ToBePosted[index][4]+ToBePosted[index][5]);
+                                $("#isowall").append("<div id=\"datetip"+index+"\" class=\"mitem sorttip datetip\" data-date=\""+namedate.getFullYear()+pad(namedate.getMonth()+1, 2)+pad(namedate.getDate(), 2)+"\" data-precedence=\"a\"><p>"+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+"<p></div>");
+                                datelist.push(namedate);
+                        }
+                        
+                        var weekdate = getWeekStart(namedate);
+                        var weekenddate = getWeekEnd(namedate);
+                        //console.log(weekenddate);
+                        if(weeklist.indexOf(weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2)) == -1)
+                        {
+                                $("#isowall").append("<div id=\"weektip"+index+"\" class=\"mitem sorttip weektip\" data-week=\""+weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2)+"\" data-date=\""+weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate()+1, 2)+"\" data-precedence=\"a\"><p>Week of "+weekdate.getMonthName()+" "+weekdate.getDate()+", "+weekdate.getFullYear()+" - "+weekenddate.getMonthName()+" "+weekenddate.getDate()+", "+weekenddate.getFullYear()+"<p></div>");
+                                weeklist.push(weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2));
                         }
                         
                         if(clublist.indexOf(ToBePosted[index][0]) == -1)
                         {
-                                $("#isowall").append("<div id=\"clubtip"+index+"\" class=\"mitem sorttip clubtip\" data-club=\""+ToBePosted[index][0]+"\"  data-precedence=\"a\"><p>"+ToBePosted[index][0]+"<p></div>");
+                                $("#isowall").append("<div id=\"clubtip"+index+"\" class=\"mitem sorttip clubtip\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"a\"><p>"+ToBePosted[index][0]+"<p></div>");
                                 clublist.push(ToBePosted[index][0]);
                         }
                 });
@@ -172,21 +203,17 @@ $( document ).ready(function(){
                                 }
                         }
                         
-                        function urlify(text) {
-                            var urlRegex = /(https?:\/\/[^\s]+)/g;
-                            return text.replace(urlRegex, function(url) {
-                                return '<a href="' + url + '">' + url + '</a>';
-                            })
-                        }
-
-                        $("#isowall").append("<div id=\"isopost"+index+"\" class=\"mitem\" value=\""+index+"\" data-date=\""+ToBePosted[index][3]+ToBePosted[index][4]+ToBePosted[index][5]+"\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"b\"><a class=\"fancybox\" rel=\"gallery1\" href=\"\"><img src=\"\"></a></div>");
+                        var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
+                        var weekdate = getWeekStart(namedate);
+                        
+                        $("#isowall").append("<div id=\"isopost"+index+"\" class=\"mitem\" value=\""+index+"\" data-date=\""+namedate.getFullYear()+pad(namedate.getMonth()+1, 2)+pad(namedate.getDate(), 2)+"\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"b\" data-week=\""+weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2)+"\"><a class=\"fancybox\" rel=\"gallery1\" href=\"\"><img src=\"\"></a></div>");
 
                         var remindmesite = "https://sites.google.com/site/postedservice/remindme";
                         var thisid = "#isopost"+index;
                         
                         $(thisid).children("a").attr("href", "https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]);
                         $(thisid).children("a").attr("title", "Click for more info.");
-                        $(thisid).children("a").attr("caption", "<h1>"+ToBePosted[index][1]+"</h1>"+urlify(ToBePosted[index][2])+" ("+ToBePosted[index][0]+", "+ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]+")"+"<div class=\"remindme\"><b><a class=\"remindmelink\" href=\""+remindmesite+"?posterid="+ToBePosted[index][6]+"\">Remind me about this event</a></b></div>");
+                        $(thisid).children("a").attr("caption", "<h1>"+ToBePosted[index][1]+"</h1><p>"+urlify(ToBePosted[index][2])+"<br /><br />("+ToBePosted[index][0]+": "+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+")</p><div class=\"remindme\"><b><a class=\"remindmelink\" href=\""+remindmesite+"?posterid="+ToBePosted[index][6]+"\">Remind me about this event</a></b></div>");
                         $(thisid).children("a").children("img").attr("src", "https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]);
                         $(thisid).children("a").children("img").attr("alt", "The Next Big Thing");
                         $(thisid).children("a").children("img").error(function(){
@@ -282,12 +309,12 @@ $( document ).ready(function(){
 
 function changeView(sortValue)
 {
-        if(sortValue == "quick")
+        if(sortValue == "week")
         {
-                $(".mitem").css("margin", "0px");
-                $(".isotope").isotope({ filter: ':not(.sorttip)' });
-                $(".isotope").isotope({ layoutMode: 'packery' });
-                $(".isotope").isotope({ sortBy: ['date', 'precedence'] });
+                $(".mitem").css("margin", "20px");
+                $(".isotope").isotope({ filter: '*:not(.sorttip:not(.weektip))' });
+                $(".isotope").isotope({ layoutMode: 'fitRows' });
+                $(".isotope").isotope({ sortBy: ['week', 'precedence', 'date'] });
                 
         }
         else if(sortValue == "date")
@@ -321,6 +348,7 @@ function updateIsowall() {
                 itemSelector: '.mitem',
                 getSortData: {
                         date: '[data-date]',
+                        week: '[data-week]',
                         clubs: '[data-club]',
                         precedence: '[data-precedence]',
                 },

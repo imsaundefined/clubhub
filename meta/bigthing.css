@@ -138,6 +138,16 @@ div
         font-weight: normal;
 }
 
+.clubtip
+{
+        border-bottom: 3px solid rgba(255, 42, 42, 0.3);
+}
+
+.weektip
+{
+        border-bottom: 3px solid rgba(0, 182, 57, 0.3);
+}
+
 /*==========================END MITEM STYLING============================*/
 
 .isotope:after {
