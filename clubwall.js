@@ -166,10 +166,10 @@ $( document ).ready(function(){
                 var weeklist = [];
                 $(ToBePosted).each(function(index){
                         var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
-                        if(datelist.indexOf(namedate) == -1)
+                        if(datelist.indexOf(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2)) == -1)
                         {
                                 $("#isowall").append("<div id=\"datetip"+index+"\" class=\"mitem sorttip datetip\" data-date=\""+namedate.getFullYear()+pad(namedate.getMonth()+1, 2)+pad(namedate.getDate(), 2)+"\" data-precedence=\"a\"><p>"+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+"<p></div>");
-                                datelist.push(namedate);
+                                datelist.push(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2));
                         }
                         
                         var weekdate = getWeekStart(namedate);
