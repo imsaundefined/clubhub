@@ -252,11 +252,11 @@ $( document ).ready(function(){
                         
                         $(thisid).children("a").click(function(){
                                 //console.log(value);
-                                _gaq.push(["_trackEvent", "ClubBox-Click", "Click", "PosterID "+ToBePosted[index][6]+"("+ToBePosted[index][0]+")"]);
+                                _gaq.push(["_trackEvent", "ClubBox-Click", "Click", "PosterID "+ToBePosted[index][6]+" ("+ToBePosted[index][0]+")"]);
                         });
                         
                         $(thisid+".remindmelink").click(function(){
-                                _gaq.push(["_trackEvent", "RemindMe-Click", "Click", "PosterID "+ToBePosted[index][6]+"("+ToBePosted[index][0]+")"]);
+                                _gaq.push(["_trackEvent", "RemindMe-Click", "Click", "PosterID "+ToBePosted[index][6]+" ("+ToBePosted[index][0]+")"]);
                         });
                 });
 

@@ -131,6 +131,7 @@ div
         margin: 0% 0% 2% 0%;
         height: 3em;
         border-bottom: 2px solid rgba(0,102,255, 0.3);
+        clear: both;
 }
 
 .sorttip p
@@ -358,9 +359,9 @@ footer
 
 /*Sort bar stuff*/
 
-.sorts
+#sorts
 {
-        display: inline;
+
 }
 
 .button {
@@ -390,12 +391,17 @@ footer
 .button-group
 {
         margin: 0% 0% 2% 0%;
-        display: inline-block;
+        display: inline;
 }
 
 .buttonbar
 {
         width: 100%;
+}
+
+#menubuttons
+{
+        float: right;
 }
 
 #imsaundefined-link
@@ -404,12 +410,25 @@ footer
         border: 1px solid rgb(256, 100, 0);
         color: rgb(256, 100, 0);
         display: inline-block;
-        float: right;
 }
 
 #imsaundefined-link:hover
 {
         background: rgb(256, 160, 100);
+        color: white;
+}
+
+#submit-link
+{
+        background: white;
+        border: 1px solid rgb(0, 182, 57);
+        color: rgb(0, 182, 57);
+        display: inline-block;
+}
+
+#submit-link:hover
+{
+        background: rgb(100, 220, 157);
         color: white;
 }
 
