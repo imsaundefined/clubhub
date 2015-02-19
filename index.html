@@ -3,7 +3,6 @@
 	<head>
 		<title>Club Hub</title>
 		<link rel="stylesheet" type="text/css" href="/clubhub/meta/style.css" />
-		<link id="bigthingstyle" rel="stylesheet" type="text/css" href="/clubhub/meta/bigthing.css" />
 		<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<link rel="shortcut icon" href="/clubhub/favicon.ico" />
                 <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -12,6 +11,8 @@
                 <script src="/clubhub/meta/packery-mode.pkgd.min.js"></script>
                 <link rel="stylesheet" href="/clubhub/meta/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
                 <script type="text/javascript" src="/clubhub/meta/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+                <script src="clubwall.js"></script>
+                <script src="/clubhub/meta/speedysurvey.js"></script>
                 <script>
                         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -38,7 +39,6 @@
                                 //$("#bigthingstyle").attr("href", "/clubhub/meta/bigthingmobile.css");
                         }*/
                 </script>
-                <script src="clubwall.js"></script>
 	</head>
 	<body>
 		<div class="branding-box">
@@ -50,6 +50,7 @@
 		
 		<div id="main-body">
 			<div class="body-box">
+			        <div class="protip protip-green" id="speedysurvey"></div>
 			        <div class="protip"><p>Protip: Click on a poster for more information.</p></div>
 			        <div class="buttonbar">
 			                <div id="sorts" class="button-group">
@@ -71,7 +72,7 @@
                                         </div>
                                 </div>
                                 <div class="protip protip-green"><p>How are we doing? <a href="https://docs.google.com/forms/d/1HMsf5ahCQivuczPrtqGjojj3NmZ8xxtKTNpNFz5J614/viewform?usp=send_form">Feedback Form (for Clubs)</a> <a href="https://docs.google.com/forms/d/10h9SFEC7zsQv_teze6dOfSI168qGP8z4Ef3oLrz6Z6Q/viewform?usp=send_form">Feedback Form (for Students)</a><p></div>
-                                <div class="protip protip-clear" style="background-color: rgba(0,0,0,0)"><p>Club Hub version 0.3.1</p></div>
+                                <div class="protip protip-clear" style="background-color: rgba(0,0,0,0)"><p>Club Hub version 0.3.3</p></div>
 			</div>
 			<div class="footer"></div>
 		</div>
